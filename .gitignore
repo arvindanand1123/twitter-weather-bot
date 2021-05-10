@@ -1,4 +1,6 @@
 twitterbot/.chalice/deployments/
 twitterbot/.chalice/venv/
-.env
+twitterbot/chalicelib/.env
 env/
+t.env
+.DS_Store

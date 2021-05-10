@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 import requests
 
 
-load_dotenv()
+load_dotenv('t.env')
 print("Get credentials")
 consumer_key = os.getenv("CONSUMER_KEY")
 consumer_secret = os.getenv("CONSUMER_SECRET")
