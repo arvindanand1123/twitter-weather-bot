@@ -22,6 +22,11 @@ access_token_secret = os.getenv("ACCESS_TOKEN_SECRET")
 wit_token = os.getenv("WIT")
 weather_token = os.getenv("OWEATHER")
 
+print("Authenticate")
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+
 
 def raise_exception(msg, bad_tag=0):
     if(bad_tag):
@@ -33,6 +38,7 @@ def raise_exception(msg, bad_tag=0):
 def tweet():
     body = app.current_request.json_body
     txt = body['query']
+    tweet_id = body['id']
     client = Wit(wit_token)
     try:
         wit_resp = client.message(txt)
@@ -42,27 +48,11 @@ def tweet():
             openweather_url = 'https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s' % (loc,weather_token)
             r = requests.get(openweather_url)
             desc = r.json()['weather'][0]['description']
-            return {'weather': desc + ' today in ' + loc}
+            t = desc + ' today in ' + loc
+            api.update_status(
+                status=t,
+                in_reply_to_status_id=tweet_id,
+            )
+            return {'weather': t}
     except:
         raise_exception('Seems like the query was not understood, please try asking about the weather',1)
-
-
-# The view function above will return {"hello": "world"}
-# whenever you make an HTTP GET request to '/'.
-#
-# Here are a few more examples:
-#
-# @app.route('/hello/{name}')
-# def hello_name(name):
-#    # '/hello/james' -> {"hello": "james"}
-#    return {'hello': name}
-#
-# @app.route('/users', methods=['POST'])
-# def create_user():
-#     # This is the JSON body the user sent in their POST request.
-#     user_as_json = app.current_request.json_body
-#     # We'll echo the json body back to the user in a 'user' key.
-#     return {'user': user_as_json}
-#
-# See the README documentation for more examples.
-#
