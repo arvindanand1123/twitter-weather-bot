@@ -1,2 +1,4 @@
+twitterbot/.chalice/deployments/
+twitterbot/.chalice/venv/
 .env
 env/
