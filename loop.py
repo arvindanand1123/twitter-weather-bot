@@ -43,17 +43,16 @@ def check_mentions(api, keywords, since_id):
                 in_reply_to_status_id=tweet.id,
             )
         else:
-            print(tweet.user)
             try:
                 payload = {"query":tweet.text.lower(), "uname": tweet.user.screen_name ,"id":tweet.id}
                 header = {'Content-Type': 'application/json'}
                 r = requests.post(l, json=payload, headers=header)
+                logger.info(("Payload return", r.json()))
             except:
                 api.update_status(
                 status=('@' + uname + " Seems like the query was not understood, please try asking about the weather. Try tweeting 'help' or 'support'."),
                     in_reply_to_status_id=tweet.id,
                     )
-        logger.info(("Payload return", r.json()))
     return new_since_id
 
 
