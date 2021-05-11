@@ -21,7 +21,7 @@ access_token_secret = os.getenv("ACCESS_TOKEN_SECRET")
 print("Authenticate")
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
-api = tweepy.API(auth)
+api = tweepy.API(auth, wait_on_rate_limit=True)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
