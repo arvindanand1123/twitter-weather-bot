@@ -39,6 +39,7 @@ def tweet():
     body = app.current_request.json_body
     txt = body['query']
     tweet_id = body['id']
+    uname = body['uname']
     client = Wit(wit_token)
     try:
         wit_resp = client.message(txt)
@@ -48,7 +49,7 @@ def tweet():
             openweather_url = 'https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s' % (loc,weather_token)
             r = requests.get(openweather_url)
             desc = r.json()['weather'][0]['description']
-            t = desc + ' today in ' + loc
+            t = ('@' + uname + ' ' + desc + ' today in ' + loc)
             api.update_status(
                 status=t,
                 in_reply_to_status_id=tweet_id,
