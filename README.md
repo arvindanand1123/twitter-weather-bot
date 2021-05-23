@@ -1,5 +1,4 @@
 # twitter-weather-bot
-Project 2 for DS 3002 @ UVA
 
 ![image](https://user-images.githubusercontent.com/15079290/117753249-27027900-b1e6-11eb-9412-fb3e0d12af34.png)
 
